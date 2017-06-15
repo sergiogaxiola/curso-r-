@@ -1,0 +1,28 @@
+################ dia 4 ########################
+install.packages("audio")
+library(audio)
+christmas_file <- tempfile()
+download.file("https://sites.google.com/site/pocketecoworld/merrychristmas1.wav", christmas_file, mode = "wb")
+xmas <- load.wave(christmas_file)
+play(xmas)
+########### bajar base de datos con la misma lógica de la canción
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe
+              /microdatos/enoe_15ymas/2017/2017trim1_dbf.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("dbf",files)])
+library (foreign)
+SDEMT117 <- data.frame(read.dbf("sdemt117.dbf"))
+View (SDEMT117)
+ls (SDEMT117)
+#####FRECUENCIAS Y TABULADOS 
+#1. Frecuencias
+#1.1  Frecuencias con datos muestrales (sin ponderar)
+#Metodo 1
+install.packages("questionr")
+library (questionr)
+wtd.table(SDEMT117$POS_OCU)
+wtd.table(SDEMT117$POS_OCU,na.show = TRUE)
+wtd.table(SDEMT117$POS_OCU,weights=SDEMT117$FAC,na.show = TRUE)
+wtd.table (SDEMT117$ENT,weights=SDEMT117$FAC,na.show = TRUE)
+
